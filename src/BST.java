@@ -4,6 +4,7 @@ import java.util.List;
 public class BST<K extends Comparable<K>, V> {
     private Node root;
     private int size;
+    private int height;
 
     private class Node {
         private K key;
@@ -15,6 +16,24 @@ public class BST<K extends Comparable<K>, V> {
             this.key = key;
             this.value = value;
         }
+    }
+
+    public void height(K key){
+        root = heightRecursive(root, key);
+    }
+    private Node heightRecursive(Node node, K key){
+        if (node == null) {
+            return null;
+        }
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            height++;
+            node.left = heightRecursive(node.left, key);
+        } else if (cmp > 0) {
+            height++;
+            node.right = heightRecursive(node.right, key);
+        }
+        return node;
     }
 
     public void put(K key, V value) {
